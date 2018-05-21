@@ -19,35 +19,60 @@ namespace CoreWebApiFromEmpty.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")] //standard
-        //[HttpGet("{id?}")] //optional
-        //[HttpGet("{id=42}")] //optional with a default value
-        //[HttpGet("{id:int}")] //constrain to int
+        //// GET api/<controller>/5
+        //[HttpGet("{id}")] //standard
+        ////[HttpGet("{id?}")] //optional
+        ////[HttpGet("{id=42}")] //optional with a default value
+        ////[HttpGet("{id:int}")] //constrain to int
+        ////public string Get(int id)
+        ////{
+        ////    return $"value {id}";
+        ////}
+        ////public string Get(int id, string qp)
+        ////{
+        ////    return $"id: {id}, query parameter: {qp}";
+        ////}
         //public string Get(int id)
         //{
         //    return $"value {id}";
         //}
-        //public string Get(int id, string qp)
-        //{
-        //    return $"id: {id}, query parameter: {qp}";
-        //}
-        public string Get(int id)
+
+        // GET api/<controller>/5
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
         {
-            return $"value {id}";
+            return Ok(new Value { Id = id, Text = "okeyvalue" + id });
         }
 
-        // POST api/<controller>
-        [HttpPost]
-        //public void Post([FromBody]string value)
+
+
+
+
+        //// POST api/<controller>
+        //[HttpPost]
+        ////public void Post([FromBody]string value)
+        ////{
+        ////}
+        //public void Post([FromBody]Value value)
         //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        throw new InvalidOperationException("Model state is invalid!");
+        //    }
         //}
-        public void Post([FromBody]Value value)
+
+        // POST api/<controller>
+        [HttpPost]        
+        public IActionResult Post([FromBody]Value value)
         {
             if (!ModelState.IsValid)
             {
-                throw new InvalidOperationException("Model state is invalid!");
+                return BadRequest(ModelState);
             }
+
+            // save the value to db etc...
+
+            return CreatedAtAction("Get", new { id = value.Id }, value);
         }
 
         // PUT api/<controller>/5

@@ -83,3 +83,37 @@ public void Post([FromBody]Value value)
     }
 }
 ```
+
+
+### 06 Action results
+
+* Returning objects that implement `IActionResult` or `Task<IActionResult>` gives us a lot of very convenient prebuilt functionality.
+
+* Edit the POST method in order to return an `IActionResult` and use `BadRequest` and `CreatedAtAction`.
+
+```
+// POST api/<controller>
+[HttpPost]        
+public IActionResult Post([FromBody]Value value)
+{
+   if (!ModelState.IsValid)
+   {
+       return BadRequest(ModelState);
+   }
+
+   // save the value to db etc...
+
+   return CreatedAtAction("Get", new { id = value.Id }, value);
+}
+```
+
+* Edit the GET by Id method in order to return an `IActionResult` and use `Ok`.
+
+```
+// GET api/<controller>/5
+[HttpGet("{id}")]
+public IActionResult Get(int id)
+{
+    return Ok(new Value { Id = id, Text = "okeyvalue" + id });
+}
+```
