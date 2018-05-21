@@ -11,15 +11,18 @@ namespace CoreWebApiFromEmpty.Controllers
     [Route("api/[controller]")]
     public class ValuesController : ControllerBase
     {
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
+        //// GET: api/<controller>
+        //[HttpGet]
+        //public IEnumerable<string> Get()
+        //{
+        //    return new string[] { "value1", "value2" };
+        //}
 
         // GET api/<controller>/5
-        [HttpGet("{id}")]
+        //[HttpGet("{id}")] //standard
+        //[HttpGet("{id?}")] //optional
+        //[HttpGet("{id=42}")] //optional with a default value
+        [HttpGet("{id:int}")] //constrain to int
         public string Get(int id)
         {
             return $"value {id}";

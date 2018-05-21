@@ -25,3 +25,24 @@ app.UseMvc();
 * Set the *ValuesController* class to derive from *ControllerBase* rather than from *Controller* in order to reduce some Intellisense noise.
 
 * Edit the GET by Id route in order to display the Id value.
+
+
+### 04 Optional, default and constrained route values
+
+* Optional route values: {id?}
+
+* Default route values: {id=1234}
+
+* Constrains: {id:int}
+
+```
+// GET api/<controller>/5
+//[HttpGet("{id}")] //standard
+//[HttpGet("{id?}")] //optional
+//[HttpGet("{id=42}")] //optional with a default value
+[HttpGet("{id:int}")] //constrain to int
+public string Get(int id)
+{
+    return $"value {id}";
+}
+```
