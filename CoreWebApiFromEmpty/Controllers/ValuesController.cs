@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -11,18 +12,26 @@ namespace CoreWebApiFromEmpty.Controllers
     [Route("api/[controller]")]
     public class ValuesController : ControllerBase
     {
-        //// GET: api/<controller>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        // GET: api/<controller>
+        [HttpGet]
+        public IEnumerable<string> Get()
+        {
+            return new string[] { "value1", "value2" };
+        }
 
         // GET api/<controller>/5
-        //[HttpGet("{id}")] //standard
+        [HttpGet("{id}")] //standard
         //[HttpGet("{id?}")] //optional
         //[HttpGet("{id=42}")] //optional with a default value
-        [HttpGet("{id:int}")] //constrain to int
+        //[HttpGet("{id:int}")] //constrain to int
+        //public string Get(int id)
+        //{
+        //    return $"value {id}";
+        //}
+        //public string Get(int id, string qp)
+        //{
+        //    return $"id: {id}, query parameter: {qp}";
+        //}
         public string Get(int id)
         {
             return $"value {id}";
@@ -30,8 +39,15 @@ namespace CoreWebApiFromEmpty.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]string value)
+        //public void Post([FromBody]string value)
+        //{
+        //}
+        public void Post([FromBody]Value value)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidOperationException("Model state is invalid!");
+            }
         }
 
         // PUT api/<controller>/5
@@ -45,5 +61,13 @@ namespace CoreWebApiFromEmpty.Controllers
         public void Delete(int id)
         {
         }
+    }
+
+    public class Value
+    {
+        public int Id { get; set; }
+
+        [MinLength(3)]
+        public string Text { get; set; }
     }
 }
