@@ -123,7 +123,7 @@ public IActionResult Get(int id)
 
 * Remember to use **[FromBody]** in order to use input formatters.
 
-* Output formatters handle response content negotiation. 
+* Output formatters handle response content negotiation.
 
 * Constrain formats per action using **[Produces/Consumes]**.
 
@@ -135,4 +135,58 @@ public IEnumerable<string> Get()
 {
     return new string[] { "value1", "value2" };
 }
-````
+```
+
+
+### 08 Accessing data
+
+* Use Entity Framework Core to access a variety of data sources.
+* Inject your DbContext into your Web API controllers.
+* Use scaffolding to generate Web APIs based on your DbContext.
+
+
+* Add a *Data* folder, a *Todo* class and the *TodoContext* that derives from `DbContext`.
+
+* Implement **Dependency Injection** by adding a constructor that takes the a parameter of type `DbContextOptions<TodoContext>` and derives from `: base(options)`.
+
+* Define the required *DBSets*.
+
+```
+public class TodoContext : DbContext
+{
+    public TodoContext(DbContextOptions<TodoContext> options) : base(options)
+    {
+
+    }
+
+    public DbSet<Todo> Todos { get; set; }
+}
+```
+
+* In *Startup.cs*, make this dbcontext available for API controllers through dependency injection. Add the dbcontext to the services and use the SQL server option.
+
+* Add a constructor for *StartUp* that takes a parameter of type `Iconfiguration` and sets the *Configuration* variable.
+
+* Use the Configuration to provide a connection string to the `UseSqlServer` method.
+
+```
+public class Startup
+{
+    public IConfiguration Configuration { get; }
+
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
+
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+        services.AddMvc();
+    }
+
+    ...
+```        
