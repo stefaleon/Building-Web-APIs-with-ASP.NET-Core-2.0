@@ -117,3 +117,22 @@ public IActionResult Get(int id)
     return Ok(new Value { Id = id, Text = "okeyvalue" + id });
 }
 ```
+
+
+### 07 Formatters
+
+* Remember to use **[FromBody]** in order to use input formatters.
+
+* Output formatters handle response content negotiation. 
+
+* Constrain formats per action using **[Produces/Consumes]**.
+
+```
+/ GET: api/<controller>
+[HttpGet]
+[Produces("application/json")] // restricts the response to JSON format only
+public IEnumerable<string> Get()
+{
+    return new string[] { "value1", "value2" };
+}
+````

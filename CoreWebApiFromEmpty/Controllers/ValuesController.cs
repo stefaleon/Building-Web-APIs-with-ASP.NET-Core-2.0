@@ -14,6 +14,7 @@ namespace CoreWebApiFromEmpty.Controllers
     {
         // GET: api/<controller>
         [HttpGet]
+        [Produces("application/json")] // restricts the response to JSON format only
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
