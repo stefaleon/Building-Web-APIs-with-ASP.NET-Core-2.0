@@ -147,7 +147,7 @@ public IEnumerable<string> Get()
 
 * Add a *Data* folder, a *Todo* class and the *TodoContext* that derives from `DbContext`.
 
-* Implement **Dependency Injection** by adding a constructor that takes the a parameter of type `DbContextOptions<TodoContext>` and derives from `: base(options)`.
+* Implement **Dependency Injection** by adding a constructor that takes a parameter of type `DbContextOptions<TodoContext>` and derives from `: base(options)`.
 
 * Define the required *DBSets*.
 
@@ -183,10 +183,16 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+        services.AddDbContext<TodoContext>(options =>
+           options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
         services.AddMvc();
     }
 
     ...
 ```        
+
+### 09 Configuration file
+
+* Add an ASP.NET Configuration file to the project. Add -> New Item -> App Settings File.
+Set the database name. 
