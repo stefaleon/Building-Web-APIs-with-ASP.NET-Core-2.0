@@ -26,6 +26,8 @@ namespace CoreWebApiFromEmpty
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<TodoContext>(options => options.UseInMemoryDatabase("foo"));
+            //services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
             services.AddMvc();
         }

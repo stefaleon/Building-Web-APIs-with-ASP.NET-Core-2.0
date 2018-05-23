@@ -195,4 +195,20 @@ public class Startup
 ### 09 Configuration file
 
 * Add an ASP.NET Configuration file to the project. Add -> New Item -> App Settings File.
-Set the database name. 
+
+This procedure creates automatically the  *appsettings.json* file that contains the *DefaultConnection* as an attribute in *ConnectionStrings*.
+
+* Set the database name.
+
+* Add an initial migration and create the database.
+
+
+
+### 10 Scaffolded controller
+
+Generate a scaffolded functional Web API controller that provides CRUD functionality for Todos.
+
+* Add -> Controller -> API Controller with actions, using Entity Framework
+* Model class -> Todo
+* Data context class -> TodoContext
+* Controller name -> TodosController
